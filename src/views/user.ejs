@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>List User</title>
     <!-- Latest compiled and minified CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -74,7 +74,9 @@
                                     <%=item.username%>
                                 </td>
                                 <td>
-                                    <button class="btn btn-success" onclick="">Edit</button>
+                                    <a href="/update-user/<%= item.id%>" class="btn btn-success">
+                                        Edit
+                                    </a>
                                     <form action="/delete-user/<%= item.id%>" method="POST" style="display: inline;">
                                         <button class="btn btn-danger" type="submit">
                                             Delete

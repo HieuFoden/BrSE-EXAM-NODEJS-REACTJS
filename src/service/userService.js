@@ -58,4 +58,23 @@ const deleteUser = async (id) => {
     };
 };
 
-module.exports = { createNewUser, getUserList, deleteUser };
+const getUserById = async (id) => {
+    const connection = await mysql.createConnection({ host: 'localhost', user: 'root', database: 'JWT', Promise: bluebird });
+    try {
+        const [rows, fields] = await connection.execute('SELECT * FROM users WHERE id = ?', [id]);
+        return rows;
+    } catch (e) {
+        console.log('>>check error : ', e);
+    };
+};
+const updateUserInfo = async (email, username, id) => {
+    const connection = await mysql.createConnection({ host: 'localhost', user: 'root', database: 'JWT', Promise: bluebird });
+    try {
+        const [rows, fields] = await connection.execute('UPDATE users SET email = ?, username = ? WHERE id=?', [email, username, id]);
+        return rows;
+    } catch (e) {
+        console.log('>>check error : ', e);
+    };
+};
+
+module.exports = { createNewUser, getUserList, deleteUser, getUserById, updateUserInfo };
