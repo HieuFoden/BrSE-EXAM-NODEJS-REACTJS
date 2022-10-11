@@ -27,18 +27,7 @@ const createNewUser = async (email, password, username) => {
 
 const getUserList = async () => {
     const connection = await mysql.createConnection({ host: 'localhost', user: 'root', database: 'JWT', Promise: bluebird });
-    // return connection.query(   //return de lay duoc danh sach tai homeController
-    //     'SELECT * FROM users',
-    //     function (err, results, fields) {
-    //         if (err) {
-    //             console.log(err);
-    //             return users;
-    //         }
-    //         users = results;
-    //         // console.log("check result : ", results);
-    //         return users;
-    //     }
-    // );
+
     try {
         const [rows, fields] = await connection.execute('SELECT * FROM `users`');
         // console.log('>>>check rows : ', rows);
