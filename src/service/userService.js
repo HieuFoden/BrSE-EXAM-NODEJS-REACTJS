@@ -79,7 +79,7 @@ const getUserById = async (userId) => {
     user = await db.User.findOne(
         { where: { id: userId } }
     );
-    return user.get({ plain: true });
+    return user.get({ plain: true }); // bien user la 1 sequelize object nen phai convert sang bien js thuan
 
     // const connection = await mysql.createConnection({ host: 'localhost', user: 'root', database: 'JWT', Promise: bluebird });
     // try {
