@@ -43,14 +43,14 @@ const registerNewUser = async (rawDataUser) => {
         let isEmailExist = await checkEmailExist(rawDataUser.email);
         if (isEmailExist === true) {
             return {
-                EM: 'The email is already exsist',
+                EM: '登録したメールは存在してます',
                 EC: 1
             }
         }
         let isPhoneExist = await checkPhoneExist(rawDataUser.phone);
         if (isPhoneExist === true) {
             return {
-                EM: 'The phone number is already exsist',
+                EM: '登録した電話番号は存在してます',
                 EC: 1
             }
         }
@@ -65,7 +65,7 @@ const registerNewUser = async (rawDataUser) => {
         });
 
         return {
-            EM: 'A user is created successfully',
+            EM: '登録は成功しました。',
             EC: 0
         }
     } catch (e) {
@@ -109,7 +109,7 @@ const handleUserLogin = async (rawData) => {
         }
         console.log('>>>INput user with email/phone : ', rawData.valueLogin, 'password: ', rawData.password);
         return {
-            EM: 'Your email/phone number/ password is incorrect',
+            EM: 'メール、電話番号、パスワードは正しくはありません。',
             EC: 1,
             DT: ''
         };
