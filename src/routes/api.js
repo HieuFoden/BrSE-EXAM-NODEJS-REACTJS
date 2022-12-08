@@ -12,6 +12,7 @@ const initApiRoutes = (app) => {
     router.post('/login', apiController.handleLogin);
 
     router.get('/product/read', productController.showProduct);
+    router.get('/product/read/:id', productController.showDetailProduct);
 
     //giao dien khoi dau
     return app.use('/api/v1/', router);

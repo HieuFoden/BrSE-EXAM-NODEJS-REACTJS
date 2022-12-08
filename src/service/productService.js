@@ -62,6 +62,34 @@ const getProductWithPagination = async (page, limit) => {
     }
 };
 
+const getDetailProduct = async (id) => {
+
+    try {
+        let product = await db.Product.findOne({ where: { id: id } });
+        if (product) {
+            // let data = users.get({ plain: true });
+            return {
+                EM: 'get data success',
+                EC: 0,
+                DT: product
+            }
+        } else {
+            return {
+                EM: 'get data success',
+                EC: 0,
+                DT: []
+            }
+        }
+    } catch (error) {
+        console.log(error);
+        return {
+            EM: 'サーバーには何かエラーがある',
+            EC: 1,
+            DT: []
+        }
+    }
+};
+
 module.exports = {
-    getAllProducts, getProductWithPagination
+    getAllProducts, getProductWithPagination, getDetailProduct
 };
