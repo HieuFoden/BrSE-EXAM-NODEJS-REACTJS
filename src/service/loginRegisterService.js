@@ -37,8 +37,6 @@ const checkPhoneExist = async (userPhone) => {
 
 const registerNewUser = async (rawDataUser) => {
     try {
-
-
         // check email/ phonenumber are exist
         let isEmailExist = await checkEmailExist(rawDataUser.email);
         if (isEmailExist === true) {
