@@ -1,6 +1,5 @@
 import express from 'express';
 import configViewEngine from './config/viewEngine';
-import initWebRoute from './routes/web';
 import initApiRoutes from './routes/api';
 import configCors from './config/cors';
 require('dotenv').config();
@@ -19,8 +18,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 //connect database
 connection();
-//Init Web route
-initWebRoute(app);
 //Init api route
 initApiRoutes(app);
 

@@ -1,7 +1,6 @@
 import db from '../models/index';
 import bcrypt from 'bcryptjs';
 import { Op } from 'sequelize';
-import { raw } from 'body-parser';
 
 var salt = bcrypt.genSaltSync(10);
 
@@ -78,7 +77,7 @@ const registerNewUser = async (rawDataUser) => {
 
 
 const checkPassword = (inputPassword, hashPassword) => {
-    return bcrypt.compareSync(inputPassword, hashPassword); // true OR FALSE
+    return bcrypt.compareSync(inputPassword, hashPassword); // so sanh pass truyen len va hash pass ->true OR FALSE
 };
 
 const handleUserLogin = async (rawData) => {
@@ -86,7 +85,7 @@ const handleUserLogin = async (rawData) => {
 
         let user = await db.User.findOne({
             where: {
-                // OP.or : toan tu hoac
+                // sequelize or condittion .OP: operator : toan tu hoac . 1 trong 2 TH dung van tra ve ket qua
                 [Op.or]: [
                     { email: rawData.valueLogin },
                     { phone: rawData.valueLogin }
