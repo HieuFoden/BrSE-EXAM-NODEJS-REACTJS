@@ -69,13 +69,13 @@ const getDetailProduct = async (id) => {
         if (product) {
             // let data = users.get({ plain: true });
             return {
-                EM: 'get data success',
+                EM: 'データ取得が成功',
                 EC: 0,
                 DT: product
             }
         } else {
             return {
-                EM: 'get data success',
+                EM: 'データ取得が成功',
                 EC: 0,
                 DT: []
             }
