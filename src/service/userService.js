@@ -37,7 +37,9 @@ const getUserWithPagination = async (page, limit) => {
 
         const { count, rows } = await db.User.findAndCountAll({
             offset: offset,
-            limit: limit
+            limit: limit,
+            attributes: ['id', 'username', 'email', 'phone'],
+            include: { model: db.Group, attributes: ['name', 'description'] }
         });
 
         let totalPages = Math.ceil(count / limit);
@@ -48,11 +50,10 @@ const getUserWithPagination = async (page, limit) => {
         };
 
         return {
-            EM: 'サーバーには何かエラーがある',
-            EC: 1,
+            EM: 'データ取得が成功',
+            EC: 0,
             DT: data
         }
-
     } catch (error) {
         console.log(error);
         return {
@@ -93,11 +94,30 @@ const updateUser = async (data) => {
 
 const deleteUser = async (id) => {
     try {
-        await db.User.delete({
+        let user = await db.User.findOne({
             where: { id: id }
         });
+        if (user) {
+            await user.destroy();
+            return {
+                EM: 'ユーザ削除が成功',
+                EC: 0,
+                DT: []
+            }
+        } else {
+            return {
+                EM: 'ユーザーが存在しません',
+                EC: 2,
+                DT: []
+            }
+        }
     } catch (error) {
         console.log(error);
+        return {
+            EM: 'サーバーには何かエラーがある',
+            EC: 1,
+            DT: []
+        }
     }
 };
 

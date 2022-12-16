@@ -6,6 +6,7 @@ require('dotenv').config();
 import bodyParser from 'body-parser';
 import connection from './config/connectDB';
 
+
 const app = express();
 const PORT = process.env.PORT || 8080;
 
@@ -20,6 +21,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 connection();
 //Init api route
 initApiRoutes(app);
+
+let cors = require('cors')
+
+app.use(cors())
 
 app.listen(PORT, () => {
     console.log('>>> JWT Back-end is running the port = ' + PORT);
