@@ -1,4 +1,6 @@
 import db from "../models/index";
+import { checkEmailExist, checkPhoneExist, hashUserPassword } from './loginRegisterService';
+
 
 const getAllUsers = async () => {
 
@@ -38,8 +40,9 @@ const getUserWithPagination = async (page, limit) => {
         const { count, rows } = await db.User.findAndCountAll({
             offset: offset,
             limit: limit,
-            attributes: ['id', 'username', 'email', 'phone'],
-            include: { model: db.Group, attributes: ['name', 'description'] }
+            attributes: ['id', 'username', 'email', 'phone', 'address', 'sex'],
+            include: { model: db.Group, attributes: ['name', 'description', 'id'] },
+            order: [['id', 'DESC']]
         });
 
         let totalPages = Math.ceil(count / limit);
@@ -66,29 +69,82 @@ const getUserWithPagination = async (page, limit) => {
 
 const createNewUser = async (data) => {
     try {
-        await db.User.create({
+        // check email/ phonenumber are exist
+        let isEmailExist = await checkEmailExist(data.email);
+        if (isEmailExist === true) {
+            return {
+                EM: '登録したメールは存在してます',
+                EC: 1,
+                DT: 'email'
+            }
+        }
+        let isPhoneExist = await checkPhoneExist(data.phone);
+        if (isPhoneExist === true) {
+            return {
+                EM: '登録した電話番号は存在してます',
+                EC: 1,
+                DT: 'phone'
+            }
+        }
+        //hash user password
+        let hashPassword = hashUserPassword(data.password);
 
-        });
+        await db.User.create({ ...data, password: hashPassword });
+        return {
+            EM: '追加が成功',
+            EC: 0,
+            DT: []
+        }
     } catch (error) {
         console.log(error);
+        return {
+            EM: 'サーバーには何かエラーがある',
+            EC: 1,
+            DT: []
+        }
     }
 };
 
 const updateUser = async (data) => {
     try {
+        if (!data.groupId) {
+            return {
+                EM: 'グループはありません',
+                EC: 1,
+                DT: 'group'
+            }
+        }
         let user = await db.User.findOne({
             where: { id: data.id }
         });
         if (user) {
             //update
-            user.save({
-
+            await user.update({
+                username: data.username,
+                address: data.address,
+                sex: data.sex,
+                groupId: data.groupId
             });
+            return {
+                EM: '編集成功です',
+                EC: 0,
+                DT: ''
+            }
         } else {
             //not found
+            return {
+                EM: 'グループはありません',
+                EC: 2,
+                DT: ''
+            }
         }
     } catch (error) {
         console.log(error);
+        return {
+            EM: 'サーバーには何かエラーがある',
+            EC: 1,
+            DT: []
+        }
     }
 };
 

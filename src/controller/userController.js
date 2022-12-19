@@ -33,9 +33,17 @@ const readUser = async (req, res) => {
     }
 };
 
-const createUser = (req, res) => {
+const createUser = async (req, res) => {
     try {
+        //validate
 
+        let data = await userService.createNewUser(req.body);
+
+        return res.status(200).json({
+            EM: data.EM, //ERROR MESSAGE
+            EC: data.EC, //error code
+            DT: data.DT //data
+        });
     } catch (error) {
         console.log(error);
         return res.status(500).json({
@@ -46,9 +54,26 @@ const createUser = (req, res) => {
     }
 };
 
-const updateUser = (req, res) => {
+const updateUser = async (req, res) => {
     try {
+        try {
+            //validate
 
+            let data = await userService.updateUser(req.body);
+
+            return res.status(200).json({
+                EM: data.EM, //ERROR MESSAGE
+                EC: data.EC, //error code
+                DT: data.DT //data
+            });
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({
+                EM: 'error from server', //ERROR MESSAGE
+                EC: '-1', //error code
+                DT: '' //data
+            });
+        }
     } catch (error) {
         console.log(error);
         return res.status(500).json({
