@@ -7,6 +7,7 @@ import bodyParser from 'body-parser';
 import connection from './config/connectDB';
 
 
+
 const app = express();
 const PORT = process.env.PORT || 8080;
 
@@ -19,6 +20,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 //connect database
 connection();
+
 //Init api route
 initApiRoutes(app);
 
