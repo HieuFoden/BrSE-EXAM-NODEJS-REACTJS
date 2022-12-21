@@ -3,13 +3,14 @@ import apiController from '../controller/apiController';
 import productController from '../controller/productController';
 import userController from '../controller/userController';
 import groupController from '../controller/groupController';
+import { checkUserJWT, checkUserPermission } from '../middleware/JWTAction';
 
 const router = express.Router();
 
 const initApiRoutes = (app) => {
+    router.all('*', checkUserJWT, checkUserPermission,);
 
     //test api
-    router.get('/test-api', apiController.testApi);
     router.post('/register', apiController.handleRegister);
     router.post('/login', apiController.handleLogin);
 

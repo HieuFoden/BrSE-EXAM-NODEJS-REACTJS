@@ -4,8 +4,8 @@ import initApiRoutes from './routes/api';
 import configCors from './config/cors';
 require('dotenv').config();
 import bodyParser from 'body-parser';
-import connection from './config/connectDB';
-
+// import connection from './config/connectDB';
+import cookieParser from 'cookie-parser';
 
 
 const app = express();
@@ -18,8 +18,10 @@ configViewEngine(app);
 //config body-parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+// config cookie-parser
+app.use(cookieParser());
 //connect database
-connection();
+// connection();
 
 //Init api route
 initApiRoutes(app);

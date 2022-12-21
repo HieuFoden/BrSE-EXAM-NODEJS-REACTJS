@@ -1,12 +1,5 @@
 import loginRegisterService from '../service/loginRegisterService'
 
-const testApi = (req, res) => {
-    return res.status(200).json({
-        messsage: 'ok',
-        data: 'test api'
-    });
-};
-
 const handleRegister = async (req, res) => {
     try {
         if (!req.body.email || !req.body.phone || !req.body.password) {
@@ -46,6 +39,10 @@ const handleRegister = async (req, res) => {
 const handleLogin = async (req, res) => {
     try {
         let data = await loginRegisterService.handleUserLogin(req.body);
+        //set cookie
+        if (data && data.DT.access_token) {
+            res.cookie('jwt', data.DT.access_token, { httpOnly: true, maxAge: 60 * 60 * 1000 });  //express : res.cookie
+        }
         return res.status(200).json({
             EM: data.EM,
             EC: data.EC,
@@ -61,5 +58,5 @@ const handleLogin = async (req, res) => {
     }
 };
 module.exports = {
-    testApi, handleRegister, handleLogin
+    handleRegister, handleLogin
 };

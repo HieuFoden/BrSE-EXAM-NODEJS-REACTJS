@@ -3,8 +3,10 @@ import productService from '../service/productService';
 const showProduct = async (req, res) => {
 
     try {
+        // console.log('cookie : ', req.cookies);
+
         if (req.query.page && req.query.limit) {
-            console.log('>>>check query : ', req.query);
+
             let page = req.query.page;
             let limit = req.query.limit;
             // console.log('>>> check data : page = ', page, ' limit = ', limit);
