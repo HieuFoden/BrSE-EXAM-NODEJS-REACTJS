@@ -102,7 +102,20 @@ const deleteUser = async (req, res) => {
     }
 };
 
+const getUserAcount = async (req, res) => {
+    return res.status(200).json({
+        EM: 'ok', //ERROR MESSAGE
+        EC: 0, //error code
+        DT: {
+            access_token: req.token,
+            groupWithRoles: req.user.groupWithRoles,
+            email: req.user.email,
+            username: req.user.username
+        }
+    });
+};
+
 module.exports = {
-    readUser, createUser, updateUser, deleteUser
+    readUser, createUser, updateUser, deleteUser, getUserAcount
 };
 

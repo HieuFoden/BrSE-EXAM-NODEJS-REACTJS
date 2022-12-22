@@ -10,9 +10,9 @@ const router = express.Router();
 const initApiRoutes = (app) => {
     router.all('*', checkUserJWT, checkUserPermission,);
 
-    //test api
     router.post('/register', apiController.handleRegister);
     router.post('/login', apiController.handleLogin);
+    router.get('/account', userController.getUserAcount); // tra ve cac thong tin can thiet khi dang nhap
 
     router.get('/product/read', productController.showProduct);
     router.get('/product/read/:id', productController.showDetailProduct);
