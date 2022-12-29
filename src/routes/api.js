@@ -30,6 +30,8 @@ const initApiRoutes = (app) => {
     router.post('/role/create', roleController.createRole);
     router.put('/role/update', roleController.updateRole);
     router.delete('/role/delete', roleController.deleteRole);
+    router.get('/role/by-group/:groupId', roleController.getRoleByGroup);
+    router.post('/role/assign-to-group', roleController.assignRoleToGroup);
 
     //giao dien khoi dau
     return app.use('/api/v1/', router);

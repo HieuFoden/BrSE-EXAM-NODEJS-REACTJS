@@ -79,7 +79,7 @@ const checkUserPermission = (req, res, next) => {
             });
         }
 
-        let canAccess = roles.some(item => item.url === currentUrl);  // ham lap tra ve true or false
+        let canAccess = roles.some(item => item.url === currentUrl || currentUrl.includes(item.url));  // ham lap tra ve true or false
         if (canAccess === true) {
             next();
         } else {

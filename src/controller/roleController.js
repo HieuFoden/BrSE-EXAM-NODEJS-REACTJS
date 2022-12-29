@@ -2,27 +2,16 @@ import roleApiService from '../service/roleApiService';
 import userService from '../service/userService';
 const readRole = async (req, res) => {
     try {
-        if (req.query.page && req.query.limit) {
-            let page = req.query.page;
-            let limit = req.query.limit;
-            let data = await userService.getUserWithPagination(+page, +limit);
 
-            return res.status(200).json({
-                EM: data.EM, //ERROR MESSAGE
-                EC: data.EC, //error code
-                DT: data.DT //data
-            });
+        let data = await roleApiService.getAllRoles();
+        return res.status(200).json({
+            EM: data.EM, //ERROR MESSAGE
+            EC: data.EC, //error code
+            DT: data.DT //data
+        });
+    }
 
-        } else {
-            let data = await userService.getAllUsers();
-            return res.status(200).json({
-                EM: data.EM, //ERROR MESSAGE
-                EC: data.EC, //error code
-                DT: data.DT //data
-            });
-        }
-
-    } catch (error) {
+    catch (error) {
         console.log(error);
         return res.status(500).json({
             EM: 'error from server', //ERROR MESSAGE
@@ -86,7 +75,44 @@ const updateRole = async (req, res) => {
 const deleteRole = async (req, res) => {
 
     try {
-        let data = await userService.deleteUser(req.body.id);
+        let data = await roleApiService.deleteRole(req.body.id);
+        return res.status(200).json({
+            EM: data.EM, //ERROR MESSAGE
+            EC: data.EC, //error code
+            DT: data.DT //data
+        });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            EM: 'error from server', //ERROR MESSAGE
+            EC: '-1', //error code
+            DT: '' //data
+        });
+    }
+};
+
+const getRoleByGroup = async (req, res) => {
+    try {
+        let id = req.params.groupId;
+        let data = await roleApiService.getRoleByGroup(id);
+        return res.status(200).json({
+            EM: data.EM, //ERROR MESSAGE
+            EC: data.EC, //error code
+            DT: data.DT //data
+        });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            EM: 'error from server', //ERROR MESSAGE
+            EC: '-1', //error code
+            DT: '' //data
+        });
+    }
+};
+
+const assignRoleToGroup = async (req, res) => {
+    try {
+        let data = await roleApiService.assignRoleToGroup(req.body.data);
         return res.status(200).json({
             EM: data.EM, //ERROR MESSAGE
             EC: data.EC, //error code
@@ -103,6 +129,6 @@ const deleteRole = async (req, res) => {
 };
 
 module.exports = {
-    readRole, createRole, updateRole, deleteRole
+    readRole, createRole, updateRole, deleteRole, getRoleByGroup, assignRoleToGroup
 };
 
